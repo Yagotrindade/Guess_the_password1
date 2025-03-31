@@ -3,171 +3,24 @@
 
 <head>
     <title>Código Secreto Morse</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #000000;
-            margin: 0;
-            font-family: sans-serif;
-        }
-
-        #botaoMorse {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(to bottom, #ff4d4d, #b30000);
-            /* Efeito de profundidade */
-            border-radius: 50%;
-            cursor: pointer;
-            user-select: none;
-            /* Impede a seleção de texto ao pressionar e segurar */
-            box-shadow: 0 6px #800000, 0 8px 15px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            transition: all 0.2s ease-in-out;
-            border: none;
-        }
-
-        /* Efeito ao passar o mouse */
-        #botaoMorse:hover {
-            background: linear-gradient(to bottom, #ff6666, #cc0000);
-            box-shadow: 0 4px #800000, 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Efeito de clique (pressionado) */
-        #botaoMorse:active {
-            background: linear-gradient(to bottom, #ff2b2b, #800000);
-            box-shadow: 0 2px #4d0000, 0 4px 10px rgba(0, 0, 0, 0.5);
-            transform: translateY(4px);
-            /* Simula o botão sendo pressionado */
-        }
-
-        #mensagem {
-            margin-top: 20px;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-align: center;
-            color: white;
-        }
-
-        #codigoDigitadoDisplay {
-            margin-top: 10px;
-            font-size: 1.5em;
-            font-weight: bold;
-            letter-spacing: 10px;
-            color: white;
-            margin-bottom: 30px;
-            /* Espaçamento entre os caracteres */
-        }
-    </style>
+    <link rel="stylesheet" href="./resources/css/styles.css">
 </head>
 
 <body>
     <div id="codigoDigitadoDisplay"></div>
     <div id="botaoMorse">Pressione</div>
     <div id="image-container">
-        <img class="icon" src="./resources/images/tulipaComplete.png" alt="Tulipa">
-        <img class="icon" id="trocar" src="./resources/images/tulipa.png" alt="Tulipa">
-        <img class="icon" src="./resources/images/tulipa.png" alt="Tulipa">
-        <img class="icon" src="./resources/images/tulipa.png" alt="Tulipa">
-        <img class="icon" src="./resources/images/tulipa.png" alt="Tulipa">
+        <img class="icon" id="trocar" src="./resources/images/tulipaComplete.png" alt="Tulipa">
+        <img class="icon" id="trocar2" src="./resources/images/tulipa.png" alt="Tulipa">
+        <img class="icon" id="trocar3" src="./resources/images/tulipa.png" alt="Tulipa">
+        <img class="icon" id="trocar4" src="./resources/images/tulipa.png" alt="Tulipa">
+        <img class="icon" id="trocar5" src="./resources/images/tulipa.png" alt="Tulipa">
     </div>
 
     <div id="mensagem"></div>
 
-    <script>
-        const botaoMorse = document.getElementById('botaoMorse');
-        const mensagemDiv = document.getElementById('mensagem');
-        const codigoDigitadoDisplay = document.getElementById('codigoDigitadoDisplay');
-        const codigoSecreto = ['.', '-', '-', '.', '.', '-', '-', '.']; // Exemplo de código secreto (8 dígitos)
-        const codigoDigitado = [];
-        let pressionadoInicio;
-        const tempoPonto = 300; // Milissegundos para considerar um ponto
-
-        function atualizarDisplayCodigo() {
-            codigoDigitadoDisplay.textContent = codigoDigitado.join('');
-        }
-
-        botaoMorse.addEventListener('mousedown', () => {
-            pressionadoInicio = Date.now();
-            mensagemDiv.textContent = ''; // Limpa mensagens anteriores
-        });
-
-        botaoMorse.addEventListener('mouseup', () => {
-            if (pressionadoInicio) {
-                const tempoPressionado = Date.now() - pressionadoInicio;
-                if (tempoPressionado < tempoPonto) {
-                    codigoDigitado.push('.'); // Ponto
-                } else {
-                    codigoDigitado.push('-'); // Traço
-                }
-                pressionadoInicio = null;
-                atualizarDisplayCodigo();
-
-                if (codigoDigitado.length === codigoSecreto.length) {
-                    verificarCodigo();
-                } else if (codigoDigitado.length > codigoSecreto.length) {
-                    mensagemDiv.textContent = "Incorreto, tente novamente (muitos dígitos)";
-                    codigoDigitado.length = 0; // Reinicia o código digitado
-                    atualizarDisplayCodigo();
-                }
-            }
-        });
-
-        function verificarCodigo() {
-            if (codigoDigitado.every((valor, indice) => valor === codigoSecreto[indice])) {
-                mensagemDiv.textContent = "...Após concluir o segundo desafio, a princesa pega a chave misteriosa dentro do lugar onde os sonhos repousam. Ela abre a grande porta que a separa do mundo externo e encontra a segunda flor, juntamente com o dente metálico que abrira a porta do próximo desafio...";
-                window.onload = function () {
-                    let imagem = document.getElementById("trocar");
-                    imagem.style.opacity = "0"; // Some com a imagem
-
-                    setTimeout(() => {
-                        imagem.src = "./resouces/images/tulipaComplete.png"; // Troca a imagem
-                        imagem.style.opacity = "1"; // Reaparece suavemente
-                    }, 1500); // Pequeno atraso para suavizar
-                };
-            } else {
-                alert("Incorreto, tente novamente");
-                codigoDigitado.length = 0; // Reinicia o código digitado
-                atualizarDisplayCodigo();
-            }
-        }
-
-        // Opcional: Para dispositivos touch
-        botaoMorse.addEventListener('touchstart', (event) => {
-            event.preventDefault(); // Evita comportamentos de toque padrão
-            pressionadoInicio = Date.now();
-            mensagemDiv.textContent = '';
-        });
-
-        botaoMorse.addEventListener('touchend', () => {
-            if (pressionadoInicio) {
-                const tempoPressionado = Date.now() - pressionadoInicio;
-                if (tempoPressionado < tempoPonto) {
-                    codigoDigitado.push('.'); // Ponto
-                } else {
-                    codigoDigitado.push('-'); // Traço
-                }
-                pressionadoInicio = null;
-                atualizarDisplayCodigo();
-
-                if (codigoDigitado.length === codigoSecreto.length) {
-                    verificarCodigo();
-                } else if (codigoDigitado.length > codigoSecreto.length) {
-                    mensagemDiv.textContent = "Incorreto, tente novamente (muitos dígitos)";
-                    codigoDigitado.length = 0;
-                    atualizarDisplayCodigo();
-                }
-            }
-        });
+    <script src="./resources/js/script.js"></script>
+        
     </script>
 
 </body>
