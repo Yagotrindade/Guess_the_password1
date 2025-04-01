@@ -29,7 +29,7 @@ function trocar(imageId, newImageSrc, time) {
 
 function verificarCodigo() {
     if (codigoDigitado.every((valor, indice) => valor === codigoSecreto[indice])) {
-        mensagemDiv.textContent = "...Após concluir o segundo desafio, a princesa pega a chave misteriosa dentro do lugar onde os sonhos repousam. Ela abre a grande porta que a separa do mundo externo e encontra a segunda flor, juntamente com o dente metálico que abrira a porta do próximo desafio...";
+        mensagemDiv.textContent = "...Após concluir o segundo desafio, a princesa pega a chave misteriosa dentro do lugar onde os sonhos repousam-se. Ela abre a grande porta que a separa do mundo externo e encontra a segunda flor, juntamente com o dente metálico que abrirá a porta do próximo desafio...";
 
         trocar("trocar", "./resources/images/tulipaComplete.png", 200);
         trocar("trocar2", "./resources/images/tulipaComplete.png", 400);
